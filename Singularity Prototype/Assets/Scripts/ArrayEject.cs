@@ -5,20 +5,26 @@ using TMPro;
 
 public class ArrayEject : MonoBehaviour
 {
-    Vector2 startPosition = Vector2.zero;
-    Vector2 targetPosition = new Vector2(2.3f, 0);
-    Vector2 velocity = Vector2.zero;
     public float smoothTime = .3f;
-    bool ejected, ejecting = false;
-    public GameObject page;
-    public TMP_InputField indexText;
-    public GameObject arrayDataText;
     public List<int> data = new List<int>();
+
+    [SerializeField]
+    private GameObject page;
+    [SerializeField]
+    private TMP_InputField indexText;
+    [SerializeField]
+    private GameObject arrayDataText;
+
+    private Vector2 startPosition = Vector2.zero;
+    private Vector2 targetPosition = new Vector2(2.3f, 0);
+    private Vector2 velocity = Vector2.zero;
+    private bool ejected, ejecting = false;
 
     // Start is called before the first frame update
     void Start()
     {
         arrayDataText.GetComponent<MeshRenderer>().sortingOrder = -1;
+        page.SetActive(false);
         for (var i = 0; i < 10; i++)
         {
             data.Add(i * i);
@@ -32,6 +38,8 @@ public class ArrayEject : MonoBehaviour
             {
                 if (page.transform.localPosition.x < targetPosition.x - .01)
                 {
+                    if (!page.activeSelf)
+                        page.SetActive(true);
                     page.transform.localPosition = Vector2.SmoothDamp(page.transform.localPosition, targetPosition, ref velocity, smoothTime);
                 }
                 else

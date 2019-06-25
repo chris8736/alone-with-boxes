@@ -2,26 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class VariableEject : MonoBehaviour
 {
-    Vector2 startPosition = Vector2.zero;
-    Vector2 targetPosition = new Vector2(2.3f, 0);
-    Vector2 velocity = Vector2.zero;
     public float smoothTime = .3f;
-    public int data = 1337;
-    bool ejected, ejecting = false;
-    public GameObject page;
-    public GameObject variableDataText;
+    public int data = 0;
+    [SerializeField] private GameObject page;
+    [SerializeField] private GameObject variableDataText;
 
-    // Start is called before the first frame update
+    private Vector2 startPosition = Vector2.zero;
+    private Vector2 targetPosition = new Vector2(2.3f, 0);
+    private Vector2 velocity = Vector2.zero;
+    private bool ejected, ejecting = false;
+
     void Start()
     {
         variableDataText.GetComponent<MeshRenderer>().sortingOrder = -1;
     }
 
-    // Update is called once per frame
     void Update()
+    {
+        MoveToEjectPosition();
+    }
+
+    private void MoveToEjectPosition()
     {
         if (ejecting)
         {

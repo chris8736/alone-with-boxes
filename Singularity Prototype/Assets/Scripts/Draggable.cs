@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//courtesy cgarsiae @ https://answers.unity.com/questions/12322/drag-gameobject-with-mouse.html
-
 public class Draggable : MonoBehaviour
 {
     void OnMouseDrag()
