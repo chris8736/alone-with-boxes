@@ -7,17 +7,12 @@ public class ArrayIndex : MonoBehaviour
 {
     int index = 0;
     TextMeshProUGUI tm;
-    List<int> data;
+    public List<int> data = new List<int>();
 
     void Start()
     {
         tm = GetComponent<TextMeshProUGUI>();
         tm.text = index.ToString();
-        data = new List<int>();
-        for (int i = 0; i < 100; i++)
-        {
-            data.Add(i * i);
-        }
     }
 
     public void changeText(int i)

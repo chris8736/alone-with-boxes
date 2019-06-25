@@ -29,6 +29,8 @@ public class VariableEject : MonoBehaviour
             {
                 if (page.transform.localPosition.x < targetPosition.x - .01)
                 {
+                    if (!page.activeSelf)
+                        page.SetActive(true);
                     page.transform.localPosition = Vector2.SmoothDamp(page.transform.localPosition, targetPosition, ref velocity, smoothTime);
                 }
                 else
@@ -47,6 +49,7 @@ public class VariableEject : MonoBehaviour
                 {
                     ejected = false;
                     ejecting = false;
+                    page.SetActive(false);
                 }
             }
         }

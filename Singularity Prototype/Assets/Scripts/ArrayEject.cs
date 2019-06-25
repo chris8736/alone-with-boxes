@@ -9,16 +9,20 @@ public class ArrayEject : MonoBehaviour
     Vector2 targetPosition = new Vector2(2.3f, 0);
     Vector2 velocity = Vector2.zero;
     public float smoothTime = .3f;
-    int data;
     bool ejected, ejecting = false;
     public GameObject page;
-    public GameObject arrayHolder;
+    public TMP_InputField indexText;
     public GameObject arrayDataText;
+    public List<int> data = new List<int>();
 
     // Start is called before the first frame update
     void Start()
     {
         arrayDataText.GetComponent<MeshRenderer>().sortingOrder = -1;
+        for (var i = 0; i < 10; i++)
+        {
+            data.Add(i * i);
+        }
     }
 
     void Update()
@@ -58,8 +62,7 @@ public class ArrayEject : MonoBehaviour
             transform.Rotate(0, 0, 180);
             if (!ejected)
             {
-                data = arrayHolder.GetComponent<ArrayIndex>().getData();
-                arrayDataText.GetComponent<TextMeshPro>().text = data.ToString();
+                arrayDataText.GetComponent<TextMeshPro>().text = data[int.Parse(indexText.text)].ToString();
             }
             ejecting = true;
         }
