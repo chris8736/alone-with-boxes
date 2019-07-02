@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -16,8 +17,8 @@ public class InputParser : MonoBehaviour
         references = MasterController.instance.references;
 
         string input = tmpif.text;
-        string name = trimOneWordFromString(ref input);
-        bool isAssignment = trimOneWordFromString(ref input) == "=";
+        string name = trimVariableNameFromString(ref input);
+        bool isAssignment = trimAssignmentFromString(ref input) == "=";
 
         //Assignment case (variable)
         if (isAssignment)
@@ -36,15 +37,28 @@ public class InputParser : MonoBehaviour
         }
     }
 
-    private string trimOneWordFromString(ref string word)
+    private string trimVariableNameFromString(ref string word)
     {
-        string firstWord = null;
-        if (word.Length > 0)
+        int i = 0;
+        while (i < word.Length && ((Char.IsLetterOrDigit(word[i])) || word[i] == '_'))
         {
-            int idx = word.IndexOf(" ");
-            firstWord = word.Substring(0, idx);
-            word = word.Substring(idx + 1);
+            i += 1;
         }
+        string firstWord = word.Substring(0, i);
+        word = word.Substring(i).Trim(' ');
         return firstWord;
+    }
+
+    private string trimAssignmentFromString(ref string word)
+    {
+        if (word.Length > 0 && word[0] == '=')
+        {
+            word = word.Substring(1);
+            return "=";
+        }
+        else
+        {
+            return "";
+        }
     }
 }
