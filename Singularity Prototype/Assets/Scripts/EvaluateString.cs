@@ -57,7 +57,7 @@ public class EvaluateString
                 {
                     GameObject reference = (GameObject)references[sbuf.ToString()];
                     reference.GetComponent<Animator>().SetTrigger("Referenced");
-                    values.Push(((GameObject)references[sbuf.ToString()]).transform.Find("Canvas").transform.Find("Out").GetComponent<VariableEject>().data);
+                    values.Push(((GameObject)references[sbuf.ToString()]).GetComponent<VariableController>().data);
                 }
                 else
                 {

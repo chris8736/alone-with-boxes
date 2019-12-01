@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MasterController : MonoBehaviour
 {
@@ -9,6 +11,11 @@ public class MasterController : MonoBehaviour
     public Hashtable references;
 
     [SerializeField] private GameObject variable;
+    [SerializeField] private TextMeshProUGUI historyText;
+    [SerializeField] private GameObject parser;
+    private float timer = 1;
+    private GameObject input;
+    private GameObject output;
 
     void Awake()
     {
@@ -23,10 +30,10 @@ public class MasterController : MonoBehaviour
     {
         references = new Hashtable();
 
-        GameObject input = Instantiate(variable, new Vector3(-7, 0, 0), Quaternion.identity);
+        input = Instantiate(variable, new Vector3(-7, 0, 0), Quaternion.identity);
         input.GetComponent<VariableController>().SetNameAndData("input", 0);
         references.Add("input", input);
-        GameObject output = Instantiate(variable, new Vector3(7, 0, 0), Quaternion.identity);
+        output = Instantiate(variable, new Vector3(7, 0, 0), Quaternion.identity);
         output.GetComponent<VariableController>().SetNameAndData("output", 0);
         references.Add("output", output);
     }
@@ -34,7 +41,23 @@ public class MasterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timer -= Time.deltaTime;
+        if (timer <= 0)
+        {
+            timer = 1;
+
+            //simulate temperature change
+            if (SceneManager.GetActiveScene().buildIndex == 1) { 
+                input.GetComponent<VariableController>().SetData((int)Random.Range(67, 72));
+            }
+
+            //run program
+            string[] history = historyText.text.Split('\n');
+            for (int i = 2; i < history.Length; i++)
+            {
+                parser.GetComponent<InputParser>().ParseAndUpdate(history[i]);
+            }
+        }
     }
 
 }

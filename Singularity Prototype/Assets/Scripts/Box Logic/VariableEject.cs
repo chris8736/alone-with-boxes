@@ -7,7 +7,6 @@ using System;
 public class VariableEject : MonoBehaviour
 {
     public float smoothTime = .3f;
-    public int data = 0;
     [SerializeField] private GameObject page;
     [SerializeField] private GameObject variableDataText;
 
@@ -65,10 +64,6 @@ public class VariableEject : MonoBehaviour
         if (!ejecting)
         {
             transform.Rotate(0, 0, 180);
-            if (!ejected)
-            {
-                variableDataText.GetComponent<TextMeshPro>().text = data.ToString();
-            }
             ejecting = true;
         }
     }

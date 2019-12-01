@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class HistoryManager : MonoBehaviour
+public class SceneTransition : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
@@ -14,5 +15,10 @@ public class HistoryManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void ChangeScene()
+    {
+        SceneManager.LoadScene(1);
     }
 }
